@@ -4,7 +4,7 @@ import $ from 'jquery'
 import InputCustom from './component/InputCustom';
 import ButtonCustom from './component/ButtonCustom';
 
-export class AuthorForm extends Component {
+class AuthorForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -74,22 +74,7 @@ export class AuthorForm extends Component {
   }
 }
 
-export class AuthorTable extends Component {
-
-  constructor(){
-  super();
-  this.state = {list: []};
-  }
-
-  componentDidMount(){
-    $.ajax({
-      url: 'http://localhost:3001/authors',
-      dataType: 'json',
-      success: function(res){
-        this.setState({list: res});
-      }.bind(this)
-    });
-  }
+class AuthorTable extends Component {
 
   render(){
     return(
@@ -113,6 +98,33 @@ export class AuthorTable extends Component {
           </tbody>
         </table>
     </div>
+    );
+  }
+}
+
+export default class AuthorBox extends Component {
+
+  constructor(){
+    super();
+    this.state = {list: []};
+  }
+
+  componentDidMount(){
+    $.ajax({
+      url: 'http://localhost:3001/authors',
+      dataType: 'json',
+      success: function(res){
+        this.setState({list: res});
+      }.bind(this)
+    });
+  }
+
+  render(){
+    return (
+      <div>
+        <AuthorForm/>
+        <AuthorTable/>
+      </div>
     );
   }
 }
