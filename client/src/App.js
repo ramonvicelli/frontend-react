@@ -9,10 +9,19 @@ class App extends Component {
 
   constructor(){
     super();
-    this.state = {list: [{name: 'Ramon', email: 'ramon@ramon.com', password: 123456}]};
+    this.state = {list: []};
   }
 
-  componentWillMount(){}//antes de chamar o render
+  //antes de chamar o render
+  componentWillMount(){
+      $.ajax({
+        url: 'http://localhost:3001/authors',
+        dataType: 'json',
+        success: function(res){
+             this.setState({list: res});
+        }.bind(this)
+      });
+  }
   componentDidMount(){} //depois de chamar o render 1x
   
   render() {
