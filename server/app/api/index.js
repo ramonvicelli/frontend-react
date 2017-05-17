@@ -1,6 +1,6 @@
 const API = {}
 
-const negotiations = [{
+const authors = [{
     id: 1,
     email: 'ramon@ramon.com',
     name: 'Ramon',
@@ -27,7 +27,6 @@ const negotiations = [{
   }
 ];
 
-
-API.authors = (req, res) => res.json(negotiations.filter(negotiation => negotiation.date > previousDate));
+API.authors = (req, res) => res.json(authors);
 
 module.exports = API;
