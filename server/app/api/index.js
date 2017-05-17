@@ -39,6 +39,7 @@ API.add = (req, res) => {
 
     author.id = lastAuthor.id + 1;
     authors.push(author);
+    res.json(author);
 }
 
 module.exports = API;
