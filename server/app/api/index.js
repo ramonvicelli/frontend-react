@@ -34,12 +34,33 @@ const authors = [{
 
 API.authors = (req, res) => res.json(authors);
 API.add = (req, res) => {
+  let author = req.body;
+  if (author.name === '' || author.email === '' || author.password === '') {
+    const errors = [];
+    if (author.name === '') {
+      errors.push({
+        defaultMessage: "Name can't be blank"
+      });
+    }
+    if (author.email === '') {
+      errors.push({
+        defaultMessage: "Email can't be blank"
+      });
+    }
+    if (author.password === '') {
+      errors.push({
+        defaultMessage: "Password can't be blank"
+      });
+    }
+    res.status(400);
+    res.json(errors);
+  } else {
     const lastAuthor = authors.slice(-1)[0];
-    let author = req.body;
 
     author.id = lastAuthor.id + 1;
     authors.push(author);
     res.json(authors);
+  }
 }
 
 module.exports = API;
