@@ -36,7 +36,8 @@ class AuthorForm extends Component {
       }),
       success: function (res) {
         PubSub.publish('author.newList', res);
-      },
+        this.setState({name:'', email:'', password: ''});
+      }.bind(this),
       error: function (res) {
         if(res.status === 400){
           new ErrorHandler().publisher(res.responseJSON);
