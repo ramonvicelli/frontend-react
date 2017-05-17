@@ -33,9 +33,7 @@ class AuthorForm extends Component {
         password: this.state.password
       }),
       success: function (res) {
-        this.setState({
-          list: res
-        });
+        this.props.callbackUpdateList(res);
       }.bind(this),
       error: function (res) {
         console.log('error');
@@ -88,7 +86,7 @@ class AuthorTable extends Component {
           </thead>
           <tbody>
             {
-              this.state.list.map(author =>
+              this.props.list.map(author =>
                 <tr key={author.id}>
                   <td>{author.name}</td>
                   <td>{author.email}</td>
@@ -107,6 +105,7 @@ export default class AuthorBox extends Component {
   constructor(){
     super();
     this.state = {list: []};
+    this.updateList = this.updateList.bind(this);
   }
 
   componentDidMount(){
@@ -119,11 +118,15 @@ export default class AuthorBox extends Component {
     });
   }
 
+  updateList(newList){
+    this.setState({list: newList})
+  }
+
   render(){
     return (
       <div>
-        <AuthorForm/>
-        <AuthorTable/>
+        <AuthorForm callbackUpdateList={this.updateList}/>
+        <AuthorTable list={this.state.list}/>
       </div>
     );
   }
