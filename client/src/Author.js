@@ -4,6 +4,7 @@ import $ from 'jquery'
 import PubSub from 'pubsub-js'
 import InputCustom from './component/InputCustom';
 import ButtonCustom from './component/ButtonCustom';
+import ErrorHandler from './ErrorHandler';
 
 class AuthorForm extends Component {
   constructor() {
@@ -37,7 +38,9 @@ class AuthorForm extends Component {
         PubSub.publish('author.newList', res);
       },
       error: function (res) {
-        console.log('error');
+        if(res.status === 400){
+          new ErrorHandler().publisher(res.responseJSON);
+        }
       }
     });
   }
@@ -59,7 +62,7 @@ class AuthorForm extends Component {
       <div className="pure-form pure-form-aligned">
         <form className="pure-form pure-form-aligned" method="post" onSubmit={this.sendForm}>
 
-          <InputCustom id="nome" type="text" name="nome" label="Name" value={this.state.name} onChange={this.setName}/>
+          <InputCustom id="nome" type="text" name="name" label="Name" value={this.state.name} onChange={this.setName}/>
 
           <InputCustom id="email" type="email" name="email" label="Email" value={this.state.email} onChange={this.setEmail}/>
 
