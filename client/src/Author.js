@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import $ from 'jquery'
+import PubSub from 'pubsub-js'
 import InputCustom from './component/InputCustom';
 import ButtonCustom from './component/ButtonCustom';
 
@@ -33,8 +34,8 @@ class AuthorForm extends Component {
         password: this.state.password
       }),
       success: function (res) {
-        this.props.callbackUpdateList(res);
-      }.bind(this),
+        PubSub.publish('author.newList', res);
+      },
       error: function (res) {
         console.log('error');
       }
@@ -105,7 +106,6 @@ export default class AuthorBox extends Component {
   constructor(){
     super();
     this.state = {list: []};
-    this.updateList = this.updateList.bind(this);
   }
 
   componentDidMount(){
@@ -116,16 +116,16 @@ export default class AuthorBox extends Component {
         this.setState({list: res});
       }.bind(this)
     });
-  }
 
-  updateList(newList){
-    this.setState({list: newList})
+    PubSub.subscribe('author.newList', function(topic, newList){
+      this.setState({list: newList})
+    }.bind(this));
   }
 
   render(){
     return (
       <div>
-        <AuthorForm callbackUpdateList={this.updateList}/>
+        <AuthorForm/>
         <AuthorTable list={this.state.list}/>
       </div>
     );
