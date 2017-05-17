@@ -39,17 +39,20 @@ API.add = (req, res) => {
     const errors = [];
     if (author.name === '') {
       errors.push({
-        defaultMessage: "Name can't be blank"
+        defaultMessage: "Name can't be blank",
+        field: 'name'
       });
     }
     if (author.email === '') {
       errors.push({
-        defaultMessage: "Email can't be blank"
+        defaultMessage: "Email can't be blank",
+        field: 'email'
       });
     }
     if (author.password === '') {
       errors.push({
-        defaultMessage: "Password can't be blank"
+        defaultMessage: "Password can't be blank",
+        field: 'password'
       });
     }
     res.status(400);
