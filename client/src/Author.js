@@ -42,6 +42,9 @@ class AuthorForm extends Component {
         if(res.status === 400){
           new ErrorHandler().publisher(res.responseJSON);
         }
+      },
+      beforeSend: function(){
+        PubSub.publish('error-clean', {});
       }
     });
   }

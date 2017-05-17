@@ -14,6 +14,10 @@ export default class InputCustom extends Component {
           this.setState({msgError: error.defaultMessage});
         }
       }.bind(this));
+
+      PubSub.subscribe('error-clean', function(topic){
+          this.setState({msgError: ''});
+      }.bind(this));
     }
 
     render(){
