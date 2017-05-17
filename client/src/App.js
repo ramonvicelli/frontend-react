@@ -5,6 +5,7 @@ import './css/side-menu.css';
 import $ from 'jquery'
 
 import InputCustom from './component/InputCustom';
+import ButtonCustom from './component/ButtonCustom';
 
 class App extends Component {
 
@@ -100,9 +101,7 @@ class App extends Component {
                             
                             <InputCustom id="password" type="password" name="password" label="Password" value={this.state.password} onChange={this.setPassword}/>
 
-                            <div className="pure-control-group">
-                                <button type="submit" className="pure-button pure-button-primary">Gravar</button>
-                            </div>
+                            <ButtonCustom label="Save"/>
 
                         </form>
 
