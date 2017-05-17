@@ -2,71 +2,17 @@ import React, { Component } from 'react';
 
 import './css/pure-min.css';
 import './css/side-menu.css';
-import $ from 'jquery'
 
-import InputCustom from './component/InputCustom';
-import ButtonCustom from './component/ButtonCustom';
+import {AuthorForm, AuthorTable} from './Author';
 
 class App extends Component {
-
-  constructor(){
-    super();
-    this.state = {
-        list: [],
-        name: '',
-        email: '',
-        password: ''
-    };
-    this.sendForm = this.sendForm.bind(this);
-    this.setName = this.setName.bind(this);
-    this.setEmail = this.setEmail.bind(this);
-    this.setPassword = this.setPassword.bind(this);
-  }
 
   //antes de chamar o render
   componentWillMount(){}
 
   //depois de chamar o render 1x
-  componentDidMount(){
-      $.ajax({
-        url: 'http://localhost:3001/authors',
-        dataType: 'json',
-        success: function(res){
-             this.setState({list: res});
-        }.bind(this)
-      });
-  }
+  componentDidMount(){}
 
-  sendForm(event){
-      event.preventDefault();
-
-      $.ajax({
-          url: 'http://localhost:3001/authors',
-          contentType: 'application/json',
-          dataType: 'json',
-          type: 'post',
-          data: JSON.stringify({name: this.state.name, email: this.state.email, password:this.state.password}),
-          success: function(res){
-              this.setState({list: res});
-          }.bind(this),
-          error: function(res){
-              console.log('error');
-          }
-      });
-  }
-
-  setName(event){
-      this.setState({name: event.target.value})
-  }
-  
-  setEmail(event){
-      this.setState({email: event.target.value})
-  }
-
-  setPassword(event){
-      this.setState({password: event.target.value})
-  }
-  
   render() {
     return (
         <div id="layout">
@@ -91,41 +37,10 @@ class App extends Component {
                     <h1>Cadastro de Autores</h1>
                 </div>
                 <div className="content" id="content">
-                    <div className="pure-form pure-form-aligned">
-                        
-                        <form className="pure-form pure-form-aligned" method="post" onSubmit={this.sendForm}>
 
-                            <InputCustom id="nome" type="text" name="nome" label="Name" value={this.state.name} onChange={this.setName}/>
-                            
-                            <InputCustom id="email" type="email" name="email" label="Email" value={this.state.email} onChange={this.setEmail}/>
-                            
-                            <InputCustom id="password" type="password" name="password" label="Password" value={this.state.password} onChange={this.setPassword}/>
+                    <AuthorForm/>
+                    <AuthorTable/>
 
-                            <ButtonCustom label="Save"/>
-
-                        </form>
-
-                    </div>
-                    <div>
-                        <table className="pure-table">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>email</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.state.list.map(author =>
-                                        <tr key={author.id}>
-                                            <td>{author.name}</td>
-                                            <td>{author.email}</td>
-                                        </tr>
-                                    )
-                                }
-                            </tbody>
-                        </table> 
-                    </div>
                 </div>
             </div>
         </div>
