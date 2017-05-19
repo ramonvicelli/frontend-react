@@ -10,18 +10,14 @@ class BookForm extends Component {
   constructor() {
     super();
     this.state = {
-      titleBook: '',
       price: '',
-      price3: '',
-      price4: '',
+      title: '',
       authorId: ''
     };
 
     this.sendForm = this.sendForm.bind(this);
-    this.setTitleBook = this.setTitleBook.bind(this);
     this.setPrice = this.setPrice.bind(this);
-    this.setPrice3 = this.setPrice3.bind(this);
-    this.setPrice4 = this.setPrice4.bind(this);
+    this.setTitle = this.setTitle.bind(this);
     this.setAuthorId = this.setAuthorId.bind(this);
   }
 
@@ -34,14 +30,13 @@ class BookForm extends Component {
       dataType: 'json',
       type: 'post',
       data: JSON.stringify({
-        title: this.state.price3,
+        title: this.state.title,
         price: this.state.price,
-        authorId: this.state.price4
+        authorId: this.state.authorId
       }),
       success: function (res) {
-        console.log('suuuuuuccccccess');
         PubSub.publish('book.newList', res);
-        this.setState({price3:'', price:'', price4: ''});
+        this.setState({title:'', price:'', authorId: ''});
       }.bind(this),
       error: function (res) {
         if(res.status === 400){
@@ -54,43 +49,31 @@ class BookForm extends Component {
     });
   }
 
-  setTitleBook(event) {
-    console.log(event);
-    this.setTitleBook({titleBook: event.target.value})
-  }
-
-  setPrice3(event) {
-    console.log(event);
-    this.setState({price3: event.target.value})
+  setTitle(event) {
+    this.setState({title: event.target.value})
   }
 
   setPrice(event) {
-    console.log(event);
     this.setState({price: event.target.value})
   }
 
-  setPrice4(event) {
-    console.log(event);
-    this.setState({price4: event.target.value})
+  setAuthorId(event) {
+    this.setState({authorId: event.target.value})
   }
 
-  setAuthorId(event) {
-    console.log(event);
-    this.setAuthorId({authorId: event.target.value})
-  }
 
   render(){
     return (
       <div className="pure-form pure-form-aligned">
         <form className="pure-form pure-form-aligned" method="post" onSubmit={this.sendForm}>
 
-          <InputCustom id="titlee" type="text" name="titlee" label="Title" value={this.state.price3} onChange={this.setPrice3}/>
+          <InputCustom id="titlee" type="text" name="titlee" label="Title" value={this.state.title} onChange={this.setTitle}/>
 
           <InputCustom id="price" type="text" name="price" label="Price" value={this.state.price} onChange={this.setPrice}/>
 
           <div className="pure-control-group">
             <label htmlFor="authorId">Author</label>
-            <select id="authorId" name="authorId" value={this.state.price4} onChange={this.setPrice4}>
+            <select id="authorId" name="authorId" value={this.state.authorId} onChange={this.setAuthorId}>
               <option value="">Select the author</option>
               {this.props.authors.map(function(author){
                 return (
