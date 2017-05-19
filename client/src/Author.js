@@ -50,15 +50,15 @@ class AuthorForm extends Component {
   }
 
   setName(event) {
-    this.setState({name: event.target.value})
+    this.setState({name: event.target.value});
   }
 
   setEmail(event) {
-    this.setState({email: event.target.value})
+    this.setState({email: event.target.value});
   }
 
   setPassword(event) {
-    this.setState({password: event.target.value})
+    this.setState({password: event.target.value});
   }
 
   render(){
